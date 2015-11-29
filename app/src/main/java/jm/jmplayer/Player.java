@@ -45,13 +45,21 @@ public class Player extends MediaPlayer {
         }
     }
 
+    public void exit() {
+        seekBarHandler = null;
+        stop();
+        release();
+    }
+
     private void enableSeekBarTracking() {
         seekBarHandler = new Handler();
         mainActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                seekBar.setProgress(getCurrentPosition());
-                seekBarHandler.postDelayed(this, 100);
+                if (seekBarHandler != null) {
+                    seekBar.setProgress(getCurrentPosition());
+                    seekBarHandler.postDelayed(this, 100);
+                }
             }
         });
     }
