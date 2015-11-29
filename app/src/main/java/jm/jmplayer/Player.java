@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import java.io.IOException;
 
@@ -18,11 +19,13 @@ public class Player extends MediaPlayer {
     ImageButton btPlayPause;
     SeekBar seekBar;
     Handler seekBarHandler;
+    TextView trackInfo;
 
     public Player(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
         btPlayPause = (ImageButton) mainActivity.findViewById(R.id.playButton);
         seekBar = (SeekBar) mainActivity.findViewById(R.id.seekBar);
+        trackInfo = (TextView) mainActivity.findViewById(R.id.titleText);
         setAudioStreamType(AudioManager.STREAM_MUSIC);
         enableSeekBarInput();
     }
@@ -31,6 +34,7 @@ public class Player extends MediaPlayer {
         setDataSource(mainActivity, trackuri);
         prepare();
         seekBar.setMax(getDuration());
+        trackInfo.setText(trackuri.getLastPathSegment());
         enableSeekBarTracking();
     }
 
