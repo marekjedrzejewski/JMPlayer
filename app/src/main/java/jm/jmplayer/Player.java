@@ -3,7 +3,9 @@ package jm.jmplayer;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Handler;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
 
 import java.io.IOException;
 
@@ -14,16 +16,22 @@ public class Player extends MediaPlayer {
 
     MainActivity mainActivity;
     ImageButton btPlayPause;
+    SeekBar seekBar;
+    Handler seekBarHandler;
 
     public Player(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
         btPlayPause = (ImageButton) mainActivity.findViewById(R.id.playButton);
+        seekBar = (SeekBar) mainActivity.findViewById(R.id.seekBar);
         setAudioStreamType(AudioManager.STREAM_MUSIC);
+        enableSeekBarInput();
     }
 
     public void loadtrack(Uri trackuri) throws IOException {
         setDataSource(mainActivity, trackuri);
         prepare();
+        seekBar.setMax(getDuration());
+        enableSeekBarTracking();
     }
 
     public void playOrPause() {
@@ -35,6 +43,40 @@ public class Player extends MediaPlayer {
             start();
             btPlayPause.setImageResource(android.R.drawable.ic_media_pause);
         }
+    }
+
+    public void exit() {
+        seekBarHandler = null;
+        stop();
+        release();
+    }
+
+    private void enableSeekBarTracking() {
+        seekBarHandler = new Handler();
+        mainActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (seekBarHandler != null) {
+                    seekBar.setProgress(getCurrentPosition());
+                    seekBarHandler.postDelayed(this, 100);
+                }
+            }
+        });
+    }
+
+    private void enableSeekBarInput() {
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) { }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) { }
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean userInput) {
+                if(userInput){
+                    seekTo(progress);
+                }
+            }
+        });
     }
 
 }

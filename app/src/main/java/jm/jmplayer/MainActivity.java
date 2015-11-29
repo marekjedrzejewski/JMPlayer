@@ -33,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        playercontrol.exit();
+        super.onDestroy();
+    }
+
     public void clickPlayButton(View view) {
         playercontrol.playOrPause();
     }
@@ -48,4 +54,6 @@ public class MainActivity extends AppCompatActivity {
             browser.addView(trackPath);
         }
     }
+
 }
+
