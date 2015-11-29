@@ -3,11 +3,8 @@ package jm.jmplayer;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Log;
+import android.widget.ImageButton;
 
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -16,9 +13,11 @@ import java.io.IOException;
 public class Player extends MediaPlayer {
 
     MainActivity mainActivity;
+    ImageButton btPlayPause;
 
     public Player(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
+        btPlayPause = (ImageButton) mainActivity.findViewById(R.id.playButton);
         setAudioStreamType(AudioManager.STREAM_MUSIC);
     }
 
@@ -28,9 +27,14 @@ public class Player extends MediaPlayer {
     }
 
     public void playOrPause() {
-        if (isPlaying())
+        if (isPlaying()) {
             pause();
-        else start();
+            btPlayPause.setImageResource(android.R.drawable.ic_media_play);
+        }
+        else {
+            start();
+            btPlayPause.setImageResource(android.R.drawable.ic_media_pause);
+        }
     }
 
 }
