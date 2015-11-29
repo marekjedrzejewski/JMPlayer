@@ -3,14 +3,16 @@ package jm.jmplayer;
 import android.net.Uri;
 
 public class Track {
-    private String path;
+    private Uri uri;
     private String title;
     private String artist;
     private long durationInSeconds;
 
-    public Track(String uriPath)
+    public Track(String path)
     {
-        this.path = uriPath;
+        this.uri = Uri.parse(path);
     }
+
+    public Uri getUri(){ return uri; }
 
 }

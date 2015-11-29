@@ -46,18 +46,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createTrackList(){
-        ArrayList<String> trackList = Search.getAudioFiles();
+
+        ArrayList<Track> trackList = Search.getAudioFiles();
+        ArrayList<String> fileList = new ArrayList<>();
+
+        for(Track track : trackList){
+            fileList.add(track.getUri().getLastPathSegment());
+        }
+
         LinearLayout browser = (LinearLayout)findViewById(R.id.browserTrackList);
         ListView lv = (ListView)findViewById(R.id.listView);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, trackList);
+
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, fileList);
+
         lv.setAdapter(adapter);
-//        for(String track : trackList)
-//        {
-//            ListView.
-//            TextView trackPath = new TextView(this);
-//            trackPath.setText(track);
-//            browser.addView(trackPath);
-//        }
+
     }
 
 }
