@@ -29,4 +29,6 @@ public class MainActivity extends AppCompatActivity {
     public void clickPlayButton(View view) {
         playercontrol.playOrPause();
     }
+
 }
+
