@@ -55,6 +55,8 @@ public class Player extends MediaPlayer {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 btPlayPause.setImageResource(android.R.drawable.ic_media_play);
+                // Looping for now, when buttons get implemented it will play next track.
+                btPlayPause.callOnClick();
             }
         });
     }
