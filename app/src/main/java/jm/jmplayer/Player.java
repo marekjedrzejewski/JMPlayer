@@ -28,6 +28,7 @@ public class Player extends MediaPlayer {
         trackInfo = (TextView) mainActivity.findViewById(R.id.titleText);
         setAudioStreamType(AudioManager.STREAM_MUSIC);
         enableSeekBarInput();
+        enableOnCompletion();
     }
 
     public void loadtrack(Uri trackuri) throws IOException {
@@ -47,6 +48,15 @@ public class Player extends MediaPlayer {
             start();
             btPlayPause.setImageResource(android.R.drawable.ic_media_pause);
         }
+    }
+
+    private void enableOnCompletion() {
+        setOnCompletionListener(new OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                btPlayPause.setImageResource(android.R.drawable.ic_media_play);
+            }
+        });
     }
 
     public void exit() {
