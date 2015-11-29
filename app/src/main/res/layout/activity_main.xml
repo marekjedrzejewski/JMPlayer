@@ -61,7 +61,7 @@
                         android:layout_height="fill_parent"
                         android:id="@+id/playButton"
                         android:src="@android:drawable/ic_media_play"
-                        />
+                        android:onClick="clickPlayButton" />
 
                     <ImageButton
                         android:layout_width="wrap_content"
