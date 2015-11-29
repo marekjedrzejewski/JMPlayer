@@ -24,7 +24,23 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:id="@+id/browser"
-            android:background="#e0e0e0"></FrameLayout>
+            android:background="#e0e0e0">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:id="@+id/browserTrackList"
+                android:visibility="gone">
+
+            </LinearLayout>
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/listView" />
+        </FrameLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
