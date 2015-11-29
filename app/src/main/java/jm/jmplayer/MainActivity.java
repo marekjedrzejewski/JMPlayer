@@ -6,8 +6,10 @@ import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -46,13 +48,16 @@ public class MainActivity extends AppCompatActivity {
     public void createTrackList(){
         ArrayList<String> trackList = Search.getAudioFiles();
         LinearLayout browser = (LinearLayout)findViewById(R.id.browserTrackList);
-
-        for(String track : trackList)
-        {
-            TextView trackPath = new TextView(this);
-            trackPath.setText(track);
-            browser.addView(trackPath);
-        }
+        ListView lv = (ListView)findViewById(R.id.listView);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, trackList);
+        lv.setAdapter(adapter);
+//        for(String track : trackList)
+//        {
+//            ListView.
+//            TextView trackPath = new TextView(this);
+//            trackPath.setText(track);
+//            browser.addView(trackPath);
+//        }
     }
 
 }
