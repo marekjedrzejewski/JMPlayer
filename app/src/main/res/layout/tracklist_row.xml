@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="file_name.mp3"
+            android:id="@+id/fileNameText"
+            android:singleLine="true"
+            android:layout_weight="2"
+            android:layout_gravity="left"
+            android:foregroundGravity="fill_horizontal|left|center_horizontal"
+            android:gravity="left" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/trackStateIcon"
+            android:layout_weight="8"
+            android:foregroundGravity="right" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:id="@+id/trackDataText"
+            android:layout_weight="2"
+            android:layout_gravity="left"
+            android:foregroundGravity="fill_horizontal|left|center_horizontal"
+            android:gravity="left" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="00:00:00"
+            android:id="@+id/trackLengthText"
+            android:layout_weight="8"
+            android:layout_gravity="right"
+            android:foregroundGravity="fill_horizontal|right|center_horizontal"
+            android:gravity="right" />
+    </LinearLayout>
+
+</LinearLayout>
