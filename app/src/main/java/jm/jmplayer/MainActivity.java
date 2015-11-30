@@ -24,15 +24,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        createTrackList();
 
         // load player and sample track for testing
         playercontrol = new Player(this);
-        try {
-            playercontrol.loadtrack(Uri.parse("/storage/sdcard/Download/jmptune.mp3"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        createTrackList();
+
+
     }
 
     @Override
@@ -47,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void createTrackList(){
 
-        ArrayList<Track> trackList = Search.getAudioFiles();
+        ArrayList<Track> trackList = playercontrol.getTrackList();
         Track[] trackArr = new Track[trackList.size()];
         trackArr = trackList.toArray(trackArr);
 
@@ -58,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 new TrackAdapter(this, R.layout.tracklist_row, trackArr);
 
         lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new TracklistClickHandler(playercontrol));
 
     }
 

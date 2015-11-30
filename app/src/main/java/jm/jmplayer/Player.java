@@ -5,21 +5,25 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by marek on 29.11.15.
  */
 public class Player extends MediaPlayer {
 
-    MainActivity mainActivity;
-    ImageButton btPlayPause;
-    SeekBar seekBar;
-    Handler seekBarHandler;
-    TextView trackInfo;
+    private MainActivity mainActivity;
+    private ImageButton btPlayPause;
+    private SeekBar seekBar;
+    private Handler seekBarHandler;
+    private TextView trackInfo;
+    private int currentTrackPosition;
+    private ArrayList<Track> trackList;
 
     public Player(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
@@ -29,9 +33,23 @@ public class Player extends MediaPlayer {
         setAudioStreamType(AudioManager.STREAM_MUSIC);
         enableSeekBarInput();
         enableOnCompletion();
+
+        currentTrackPosition = 0;
+        trackList = Search.getAudioFiles();
+
+        try {
+            this.loadtrack(trackList.get(0).getUri());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void loadtrack(Uri trackuri) throws IOException {
+        if (isPlaying()) {
+            pause();
+            btPlayPause.setImageResource(android.R.drawable.ic_media_play);
+        }
+        reset();
         setDataSource(mainActivity, trackuri);
         prepare();
         seekBar.setMax(getDuration());
@@ -83,9 +101,13 @@ public class Player extends MediaPlayer {
     private void enableSeekBarInput() {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) { }
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) { }
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean userInput) {
                 if(userInput){
@@ -95,6 +117,11 @@ public class Player extends MediaPlayer {
         });
     }
 
+    public ArrayList<Track> getTrackList(){ return trackList; }
+
+    public void setTrackPosition(int newPosition){
+        currentTrackPosition = newPosition;
+    }
 }
 
 
