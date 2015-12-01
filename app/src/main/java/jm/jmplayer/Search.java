@@ -9,7 +9,7 @@ public class Search {
     private static ArrayList<Track> audioList = new ArrayList<>();
 
     public static ArrayList<Track> getAudioFiles() {
-        return getAudioFiles(Environment.getExternalStorageDirectory());
+        return getAudioFiles(new File("/storage/"));
     }
 
     public static ArrayList<Track> getAudioFiles(File dir){
