@@ -29,8 +29,7 @@ public class MainActivity extends AppCompatActivity {
         trackList = new TrackList(this, playercontrol);
 
         trackList.createTrackList();
-
-
+        trackList.loadFirst();
     }
 
     @Override
@@ -43,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
         playercontrol.playOrPause();
     }
 
+    public void clickPrevButton(View view) {
+        trackList.previousTrack();
+    }
+
+    public void clickNextButton(View view) {
+        trackList.nextTrack();
+    }
 
 
 }

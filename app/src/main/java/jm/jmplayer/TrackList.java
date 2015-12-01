@@ -3,6 +3,7 @@ package jm.jmplayer;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TrackList {
@@ -36,4 +37,40 @@ public class TrackList {
         lv.setOnItemClickListener(new TracklistClickHandler(playercontrol));
 
     }
+
+    public void loadChosen() {
+        try {
+            playercontrol.loadtrack(trackArray.get(currentTrackPosition));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadFirst() {
+        try {
+            playercontrol.loadtrack(trackArray.get(0));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void nextTrack() {
+        if (currentTrackPosition == trackArray.size()-1)
+            currentTrackPosition = 0;
+        else
+            currentTrackPosition++;
+        loadChosen();
+        playercontrol.playOrPause();
+    }
+
+    public void previousTrack() {
+        if (currentTrackPosition == 0)
+            currentTrackPosition = trackArray.size()-1;
+        else
+            currentTrackPosition--;
+        loadChosen();
+        playercontrol.playOrPause();
+    }
+
+
 }

@@ -4,6 +4,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SeekBar;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 public class Player extends MediaPlayer {
 
     private MainActivity mainActivity;
-    private ImageButton btPlayPause;
+    private ImageButton btPlayPause, btPrev, btNext;
     private SeekBar seekBar;
     private Handler seekBarHandler;
     private TextView trackInfo;
@@ -26,6 +27,8 @@ public class Player extends MediaPlayer {
     public Player(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
         btPlayPause = (ImageButton) mainActivity.findViewById(R.id.playButton);
+        btPrev = (ImageButton) mainActivity.findViewById(R.id.prevButton);
+        btNext = (ImageButton) mainActivity.findViewById(R.id.nextButton);
         seekBar = (SeekBar) mainActivity.findViewById(R.id.seekBar);
         trackInfo = (TextView) mainActivity.findViewById(R.id.titleText);
         setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -60,7 +63,7 @@ public class Player extends MediaPlayer {
             public void onCompletion(MediaPlayer mp) {
                 btPlayPause.setImageResource(android.R.drawable.ic_media_play);
                 // Looping for now, when buttons get implemented it will play next track.
-                btPlayPause.callOnClick();
+                btNext.callOnClick();
             }
         });
     }
