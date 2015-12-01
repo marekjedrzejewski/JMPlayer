@@ -17,7 +17,8 @@ public class TracklistClickHandler implements AdapterView.OnItemClickListener {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         try {
-            playercontrol.loadtrack(((Track)parent.getItemAtPosition(position)).getUri());
+            playercontrol.loadtrack(((Track)parent.getItemAtPosition(position)));
+            playercontrol.playOrPause();
             playercontrol.setTrackPosition(position);
         } catch (IOException e) {
             e.printStackTrace();

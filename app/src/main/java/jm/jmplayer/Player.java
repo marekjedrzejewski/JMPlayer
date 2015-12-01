@@ -38,22 +38,18 @@ public class Player extends MediaPlayer {
         trackList = Search.getAudioFiles();
 
         try {
-            this.loadtrack(trackList.get(0).getUri());
+            this.loadtrack(trackList.get(0));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void loadtrack(Uri trackuri) throws IOException {
-        if (isPlaying()) {
-            pause();
-            btPlayPause.setImageResource(android.R.drawable.ic_media_play);
-        }
+    public void loadtrack(Track track) throws IOException {
         reset();
-        setDataSource(mainActivity, trackuri);
+        setDataSource(mainActivity, track.getUri());
         prepare();
         seekBar.setMax(getDuration());
-        trackInfo.setText(trackuri.getLastPathSegment());
+        trackInfo.setText(track.getTitle());
         enableSeekBarTracking();
     }
 
