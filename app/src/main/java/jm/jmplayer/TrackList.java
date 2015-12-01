@@ -43,7 +43,7 @@ public class TrackList implements AdapterView.OnItemClickListener {
                 new TrackAdapter(mainActivity, R.layout.tracklist_row, trackArr);
 
         lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new TrackList(mainActivity, playercontrol));
+        lv.setOnItemClickListener(this);
 
     }
 
