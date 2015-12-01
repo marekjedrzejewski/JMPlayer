@@ -19,7 +19,6 @@ public class TracklistClickHandler implements AdapterView.OnItemClickListener {
         try {
             playercontrol.loadtrack(((Track)parent.getItemAtPosition(position)));
             playercontrol.playOrPause();
-            playercontrol.setTrackPosition(position);
         } catch (IOException e) {
             e.printStackTrace();
         }

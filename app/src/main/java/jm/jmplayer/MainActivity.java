@@ -18,16 +18,17 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     Player playercontrol;
+    TrackList trackList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // load player and sample track for testing
         playercontrol = new Player(this);
+        trackList = new TrackList(this, playercontrol);
 
-        createTrackList();
+        trackList.createTrackList();
 
 
     }
@@ -42,22 +43,7 @@ public class MainActivity extends AppCompatActivity {
         playercontrol.playOrPause();
     }
 
-    public void createTrackList(){
 
-        ArrayList<Track> trackList = playercontrol.getTrackList();
-        Track[] trackArr = new Track[trackList.size()];
-        trackArr = trackList.toArray(trackArr);
-
-        LinearLayout browser = (LinearLayout)findViewById(R.id.browserTrackList);
-        ListView lv = (ListView)findViewById(R.id.listView);
-
-        TrackAdapter adapter=
-                new TrackAdapter(this, R.layout.tracklist_row, trackArr);
-
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new TracklistClickHandler(playercontrol));
-
-    }
 
 }
 

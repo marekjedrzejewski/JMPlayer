@@ -22,8 +22,6 @@ public class Player extends MediaPlayer {
     private SeekBar seekBar;
     private Handler seekBarHandler;
     private TextView trackInfo;
-    private int currentTrackPosition;
-    private ArrayList<Track> trackList;
 
     public Player(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
@@ -34,14 +32,6 @@ public class Player extends MediaPlayer {
         enableSeekBarInput();
         enableOnCompletion();
 
-        currentTrackPosition = 0;
-        trackList = Search.getAudioFiles();
-
-        try {
-            this.loadtrack(trackList.get(0));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void loadtrack(Track track) throws IOException {
@@ -113,11 +103,6 @@ public class Player extends MediaPlayer {
         });
     }
 
-    public ArrayList<Track> getTrackList(){ return trackList; }
-
-    public void setTrackPosition(int newPosition){
-        currentTrackPosition = newPosition;
-    }
 }
 
 
