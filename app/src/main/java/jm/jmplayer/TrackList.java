@@ -1,18 +1,27 @@
 package jm.jmplayer;
 
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class TrackList {
+public class TrackList implements AdapterView.OnItemClickListener {
 
     Player playercontrol;
     ListView trackListView;
     ArrayList<Track> trackArray;
     int currentTrackPosition;
     MainActivity mainActivity;
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        currentTrackPosition = position;
+        loadChosen();
+        playercontrol.playOrPause();
+    }
 
     public TrackList(MainActivity mainActivity, Player player) {
         playercontrol = player;
@@ -34,7 +43,7 @@ public class TrackList {
                 new TrackAdapter(mainActivity, R.layout.tracklist_row, trackArr);
 
         lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new TracklistClickHandler(playercontrol));
+        lv.setOnItemClickListener(new TrackList(mainActivity, playercontrol));
 
     }
 
