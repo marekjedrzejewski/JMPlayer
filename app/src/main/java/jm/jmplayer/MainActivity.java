@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
         trackList = new TrackList(this, playercontrol);
 
         trackList.createTrackList();
-        trackList.loadFirst();
     }
 
     @Override

@@ -9,14 +9,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class TrackAdapter extends ArrayAdapter<Track> {
 
     Context context;
     int layoutResourceId;
-    Track data[] = null;
+    ArrayList<Track> data = null;
 
     public TrackAdapter(Context context, int layoutResourceId,
-                        Track[] data) {
+                        ArrayList<Track> data) {
         super(context,layoutResourceId,data);
         this.context = context;
         this.layoutResourceId = layoutResourceId;
@@ -45,7 +47,7 @@ public class TrackAdapter extends ArrayAdapter<Track> {
             holder = (TrackHolder)row.getTag();
         }
 
-        Track object = data[position];
+        Track object = data.get(position);
         holder.fileNameText.setText(object.getUri().getLastPathSegment());
         //holder.trackStateIcon.setImageResource(?);
         holder.trackDataText.setText(object.getArtist() + " - " + object.getTitle());

@@ -1,5 +1,12 @@
 package jm.jmplayer;
 
+import android.app.IntentService;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -13,8 +20,10 @@ public class TrackList implements AdapterView.OnItemClickListener {
     Player playercontrol;
     ListView trackListView;
     ArrayList<Track> trackArray;
+    TrackAdapter adapter;
     int currentTrackPosition;
     MainActivity mainActivity;
+    Intent searchServiceIntent;
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -27,23 +36,24 @@ public class TrackList implements AdapterView.OnItemClickListener {
         playercontrol = player;
         this.mainActivity = mainActivity;
         trackListView = (ListView)mainActivity.findViewById(R.id.listView);
-        // trackArray = new ArrayList<>();
-        trackArray = Search.getAudioFiles();
-        currentTrackPosition = 0;
+        trackArray = new ArrayList<>();
+        //trackArray = JMSearchService.getAudioFiles();
+        currentTrackPosition = -1;
+
+        searchServiceIntent = new Intent(mainActivity, JMSearchService.class);
+        searchServiceIntent.setData(Uri.parse("/storage/"));
+        mainActivity.startService(searchServiceIntent);
+
+        LocalBroadcastManager.getInstance(mainActivity).registerReceiver(newTrackReceiver,
+                new IntentFilter("new track"));
     }
 
     public void createTrackList(){
 
-        Track[] trackArr = new Track[trackArray.size()];
-        trackArr = trackArray.toArray(trackArr);
+        adapter = new TrackAdapter(mainActivity, R.layout.tracklist_row, trackArray);
 
-        ListView lv = trackListView;
-
-        TrackAdapter adapter=
-                new TrackAdapter(mainActivity, R.layout.tracklist_row, trackArr);
-
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(this);
+        trackListView.setAdapter(adapter);
+        trackListView.setOnItemClickListener(this);
 
     }
 
@@ -58,6 +68,7 @@ public class TrackList implements AdapterView.OnItemClickListener {
     public void loadFirst() {
         try {
             playercontrol.loadtrack(trackArray.get(0));
+            currentTrackPosition = 0;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -82,4 +93,15 @@ public class TrackList implements AdapterView.OnItemClickListener {
     }
 
 
+    private BroadcastReceiver newTrackReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            trackArray.add(new Track(intent.getStringExtra("track path")));
+            adapter.notifyDataSetChanged();
+
+            if(currentTrackPosition == -1)
+                loadFirst();
+        }
+    };
 }
