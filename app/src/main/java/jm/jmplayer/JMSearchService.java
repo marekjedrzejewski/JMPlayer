@@ -2,17 +2,10 @@ package jm.jmplayer;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.os.Environment;
 import android.support.v4.content.LocalBroadcastManager;
-
 import java.io.File;
-import java.util.ArrayList;
 
 public class JMSearchService extends IntentService {
-
-    public JMSearchService(String name) {
-        super(name);
-    }
 
     public JMSearchService() { super("JMSearchService"); }
 

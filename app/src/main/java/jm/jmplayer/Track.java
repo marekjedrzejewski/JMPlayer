@@ -9,11 +9,13 @@ public class Track {
     private String title;
     private String artist;
     private long duration;
+    private Boolean isPlaying;
 
     public Track(String path)
     {
         this.uri = Uri.parse(path);
         metaRetriever.setDataSource(path);
+        isPlaying = false;
 
         title = metaRetriever.extractMetadata(
                 MediaMetadataRetriever.METADATA_KEY_TITLE);
@@ -33,10 +35,7 @@ public class Track {
 
     public Uri getUri(){ return uri; }
 
-    public String getArtist(){
-        return artist;
-
-    }
+    public String getArtist(){ return artist; }
 
     public String getTitle() { return title; }
 
@@ -52,5 +51,8 @@ public class Track {
         else
             return String.format("%d:%02d:%02d", h, m, s);
     }
+
+    public Boolean getIsPlaying(){ return isPlaying; }
+    public void setIsPlaying(Boolean isPlaying){ this.isPlaying = isPlaying; }
 
 }

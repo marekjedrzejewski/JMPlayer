@@ -1,6 +1,5 @@
 package jm.jmplayer;
 
-import android.app.IntentService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,9 +8,7 @@ import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -21,12 +18,14 @@ public class TrackList implements AdapterView.OnItemClickListener {
     ListView trackListView;
     ArrayList<Track> trackArray;
     TrackAdapter adapter;
+    int previousTrackPosition;
     int currentTrackPosition;
     MainActivity mainActivity;
     Intent searchServiceIntent;
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        previousTrackPosition = currentTrackPosition;
         currentTrackPosition = position;
         loadChosen();
         playercontrol.playOrPause();
@@ -37,7 +36,7 @@ public class TrackList implements AdapterView.OnItemClickListener {
         this.mainActivity = mainActivity;
         trackListView = (ListView)mainActivity.findViewById(R.id.listView);
         trackArray = new ArrayList<>();
-        //trackArray = JMSearchService.getAudioFiles();
+        previousTrackPosition = -1;
         currentTrackPosition = -1;
 
         searchServiceIntent = new Intent(mainActivity, JMSearchService.class);
@@ -60,6 +59,18 @@ public class TrackList implements AdapterView.OnItemClickListener {
     public void loadChosen() {
         try {
             playercontrol.loadtrack(trackArray.get(currentTrackPosition));
+
+            if(previousTrackPosition > -1)
+                trackArray.get(previousTrackPosition).setIsPlaying(false);
+
+            if(currentTrackPosition > -1) {
+                trackArray.get(currentTrackPosition).setIsPlaying(true);
+            }
+
+            adapter.notifyDataSetChanged();
+            trackListView.setSelection(currentTrackPosition);
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -68,6 +79,7 @@ public class TrackList implements AdapterView.OnItemClickListener {
     public void loadFirst() {
         try {
             playercontrol.loadtrack(trackArray.get(0));
+            trackArray.get(0).setIsPlaying(true);
             currentTrackPosition = 0;
         } catch (IOException e) {
             e.printStackTrace();
@@ -75,6 +87,9 @@ public class TrackList implements AdapterView.OnItemClickListener {
     }
 
     public void nextTrack() {
+
+        previousTrackPosition = currentTrackPosition;
+
         if (currentTrackPosition == trackArray.size()-1)
             currentTrackPosition = 0;
         else
@@ -84,6 +99,10 @@ public class TrackList implements AdapterView.OnItemClickListener {
     }
 
     public void previousTrack() {
+
+        previousTrackPosition = currentTrackPosition;
+
+
         if (currentTrackPosition == 0)
             currentTrackPosition = trackArray.size()-1;
         else

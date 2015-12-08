@@ -29,7 +29,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/trackStateIcon"
             android:layout_weight="8"
-            android:foregroundGravity="right" />
+            android:foregroundGravity="right"
+            android:src="@android:drawable/ic_lock_silent_mode_off"
+            android:visibility="invisible" />
     </LinearLayout>
 
     <LinearLayout

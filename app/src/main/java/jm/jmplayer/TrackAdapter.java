@@ -49,7 +49,12 @@ public class TrackAdapter extends ArrayAdapter<Track> {
 
         Track object = data.get(position);
         holder.fileNameText.setText(object.getUri().getLastPathSegment());
-        //holder.trackStateIcon.setImageResource(?);
+        if(object.getIsPlaying()){
+            holder.trackStateIcon.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.trackStateIcon.setVisibility(View.INVISIBLE);
+        }
         holder.trackDataText.setText(object.getArtist() + " - " + object.getTitle());
         holder.trackLengthText.setText(object.getLengthAsString());
 
