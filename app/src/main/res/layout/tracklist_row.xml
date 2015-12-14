@@ -30,7 +30,7 @@
             android:id="@+id/trackStateIcon"
             android:layout_weight="8"
             android:foregroundGravity="right"
-            android:src="@android:drawable/ic_lock_silent_mode_off"
+            android:src="@drawable/ic_now_playing"
             android:visibility="invisible" />
     </LinearLayout>
 
